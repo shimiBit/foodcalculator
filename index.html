@@ -356,7 +356,7 @@
                 padding: 6px 8px;
             }
             
-            /* התפריט בנייד יוצג בצד ימין */
+            /* התפריט בנייד יוצג בצד ימין - תיקון בעיית הגלילה */
             .tabs {
                 flex-direction: column;
                 position: fixed;
@@ -367,6 +367,9 @@
                 z-index: 1000;
                 transition: right 0.3s ease;
                 box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+                overflow-y: auto; /* הוספת גלילה אנכית */
+                background: #f0f0f0;
+                padding-bottom: 60px; /* ריפוד לתחתית כדי שהתפריט לא יגיע עד הסוף */
             }
             .tabs.active {
                 right: 0;
@@ -396,6 +399,14 @@
             }
             .overlay.active {
                 display: block;
+            }
+            
+            /* תיקון גלילת תוכן כאשר התפריט פתוח */
+            body.menu-open {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
             }
         }
         
@@ -560,7 +571,7 @@
                 <div class="category-btn" onclick="filterCategory('nuts')">אגוזים וגרעינים</div>
                 <div class="category-btn" onclick="filterCategory('fish')">דגים</div>
                 <div class="category-btn" onclick="filterCategory('drinks')">משקאות</div>
-                <div class="category-btn" onclick="filterCategory('sweets')">מתוקים וחטיפים</div>
+                <div class="category-btn" onclick="filterCategory('sweets')">מתוקים ו� חטיפים</div>
                 <div class="category-btn" onclick="filterCategory('spreads')">ממרחים</div>
                 <div class="category-btn" onclick="filterCategory('oils')">שמנים</div>
                 <div class="category-btn" onclick="filterCategory('seasonings')">תיבול</div>
@@ -765,6 +776,7 @@
             if (width <= 768) {
                 tabsContainer.classList.remove('active');
                 document.getElementById('overlay').classList.remove('active');
+                document.body.classList.remove('menu-open');
             } else {
                 tabsContainer.classList.add('active');
             }
@@ -793,6 +805,9 @@
             
             tabsContainer.classList.toggle('active');
             overlay.classList.toggle('active');
+            
+            // הוספת/הסרת מחלקה לגוף כדי למנוע גלילה מאחורי התפריט
+            document.body.classList.toggle('menu-open');
         }
 
         // סינון מוצרים לפי קטגוריה
