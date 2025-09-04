@@ -13,10 +13,11 @@
         body {
             direction: rtl;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
         }
         .container {
             max-width: 1200px;
@@ -29,15 +30,15 @@
         header {
             background: linear-gradient(90deg, #4CAF50 0%, #2E8B57 100%);
             color: white;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
         }
         h1 {
             margin: 0;
-            font-size: 2.2rem;
+            font-size: 1.8rem;
         }
         .description {
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin: 10px 0 0;
             opacity: 0.9;
         }
@@ -45,15 +46,17 @@
             display: flex;
             background: #f0f0f0;
             border-bottom: 1px solid #ddd;
+            flex-wrap: wrap;
         }
         .tab {
-            padding: 15px 25px;
+            padding: 12px 15px;
             cursor: pointer;
             background: #e0e0e0;
             text-align: center;
             flex: 1;
             transition: all 0.3s ease;
             font-weight: bold;
+            min-width: 120px;
         }
         .tab:hover {
             background: #d0d0d0;
@@ -65,8 +68,8 @@
         }
         .tab-content {
             display: none;
-            padding: 25px;
-            min-height: 500px;
+            padding: 20px;
+            min-height: 400px;
         }
         .tab-content.active {
             display: block;
@@ -77,7 +80,7 @@
             to { opacity: 1; }
         }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         label {
             display: block;
@@ -86,11 +89,11 @@
             color: #2E8B57;
         }
         input, select, button, textarea {
-            padding: 12px 15px;
+            padding: 10px 12px;
             border: 1px solid #ddd;
             border-radius: 8px;
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-size: 16px;
         }
         input:focus, select:focus, textarea:focus {
@@ -111,15 +114,15 @@
         }
         .food-list {
             border: 1px solid #ddd;
-            height: 250px;
+            height: 200px;
             overflow-y: auto;
-            margin-bottom: 20px;
-            padding: 10px;
+            margin-bottom: 15px;
+            padding: 8px;
             border-radius: 8px;
             background: #f9f9f9;
         }
         .food-item {
-            padding: 12px;
+            padding: 10px;
             border-bottom: 1px solid #eee;
             cursor: pointer;
             transition: background 0.2s;
@@ -129,19 +132,20 @@
         }
         .details, .summary {
             background: #f9f9f9;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
-            margin-top: 20px;
+            margin-top: 15px;
             border-left: 5px solid #4CAF50;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 15px 0;
+            margin: 12px 0;
+            font-size: 14px;
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 12px;
+            padding: 8px 10px;
             text-align: right;
         }
         th {
@@ -156,41 +160,45 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
-            padding: 10px;
+            padding: 8px;
             background: #f9f9f9;
             border-radius: 8px;
+            flex-wrap: wrap;
         }
         .calculator-item button {
             width: auto;
             margin-left: 10px;
-            padding: 8px 15px;
+            padding: 6px 12px;
         }
         .vitamins-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 8px;
+            margin-top: 12px;
         }
         .vitamin-item {
             background: #e8f5e9;
-            padding: 10px;
+            padding: 8px;
             border-radius: 8px;
             text-align: center;
         }
         .category-filter {
             display: flex;
             overflow-x: auto;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
         }
         .category-btn {
             flex: 0 0 auto;
-            margin-left: 10px;
-            padding: 8px 15px;
+            margin-left: 8px;
+            padding: 6px 12px;
             background: #e0e0e0;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 14px;
+            white-space: nowrap;
         }
         .category-btn.active {
             background: #4CAF50;
@@ -198,37 +206,33 @@
         }
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             color: #666;
             border-top: 1px solid #ddd;
+            font-size: 14px;
         }
         .search-container {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .search-container i {
             position: absolute;
-            left: 15px;
-            top: 15px;
+            left: 12px;
+            top: 12px;
             color: #999;
         }
         .search-container input {
-            padding-right: 15px;
-            padding-left: 40px;
+            padding-right: 12px;
+            padding-left: 35px;
         }
         .two-columns {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        @media (max-width: 768px) {
-            .two-columns {
-                grid-template-columns: 1fr;
-            }
+            gap: 15px;
         }
         .action-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
         .action-buttons button {
             flex: 1;
@@ -237,22 +241,145 @@
             background: linear-gradient(90deg, #f44336 0%, #d32f2f 100%) !important;
         }
         .web-search-result {
-            padding: 15px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             background: #f9f9f9;
+        }
+        
+        /* מדיה קווריז עבור מסכים קטנים */
+        @media (max-width: 992px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+            .tab {
+                min-width: 110px;
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            header {
+                padding: 15px;
+            }
+            .tab-content {
+                padding: 15px;
+            }
+            .tab {
+                flex: 1 0 33.33%;
+                min-width: auto;
+                padding: 10px;
+                font-size: 13px;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            .vitamins-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            table {
+                font-size: 13px;
+            }
+            th, td {
+                padding: 6px 8px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .tab {
+                flex: 1 0 50%;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+            .description {
+                font-size: 0.9rem;
+            }
+            .category-btn {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+            input, select, button, textarea {
+                padding: 8px 10px;
+                font-size: 15px;
+            }
+            .food-list {
+                height: 180px;
+            }
+            .calculator-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .calculator-item button {
+                margin: 8px 0 0;
+                width: 100%;
+            }
+            .vitamins-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .tab {
+                flex: 1 0 100%;
+            }
+            .vitamins-grid {
+                grid-template-columns: 1fr;
+            }
+            th, td {
+                padding: 5px;
+                font-size: 12px;
+            }
+        }
+        
+        /* סגנונות נוספים לשיפור החוויה בנייד */
+        .mobile-menu-btn {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+                display: none;
+            }
+            .tabs.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i> תפריט
+    </button>
+    
     <div class="container">
         <header>
             <h1><i class="fas fa-utensils"></i> תוכנת ניהול תזונה ישראלית</h1>
             <p class="description">מערכת לניהול תזונה עם מאגר מזונות מלא</p>
         </header>
 
-        <div class="tabs">
+        <div class="tabs" id="tabsContainer">
             <div class="tab active" onclick="switchTab(0)"><i class="fas fa-search"></i> חיפוש מזון</div>
             <div class="tab" onclick="switchTab(1)"><i class="fas fa-calculator"></i> מחשבון תזונה</div>
             <div class="tab" onclick="switchTab(2)"><i class="fas fa-weight"></i> גרעון קלורי</div>
@@ -719,6 +846,21 @@
 
             // הצגת מזונות לפי קטגוריה
             showCategoryFoods();
+            
+            // בדיקת גודל מסך והתאמה אוטומטית
+            handleResponsiveLayout();
+        }
+
+        // טיפול בתצוגה רספונסיבית
+        function handleResponsiveLayout() {
+            const width = window.innerWidth;
+            const tabsContainer = document.getElementById('tabsContainer');
+            
+            if (width <= 768) {
+                tabsContainer.classList.remove('active');
+            } else {
+                tabsContainer.classList.add('active');
+            }
         }
 
         // החלפת כרטיסיות
@@ -730,6 +872,17 @@
             // הוספת מחלקת active לכרטיסיה הנבחרת
             document.querySelectorAll('.tab')[tabIndex].classList.add('active');
             document.getElementById('tab' + tabIndex).classList.add('active');
+            
+            // סגירת תפריט הניווט בנייד לאחר בחירה
+            if (window.innerWidth <= 768) {
+                document.getElementById('tabsContainer').classList.remove('active');
+            }
+        }
+
+        // הצגה/הסתרה של תפריט הניווט בנייד
+        function toggleMobileMenu() {
+            const tabsContainer = document.getElementById('tabsContainer');
+            tabsContainer.classList.toggle('active');
         }
 
         // סינון מוצרים לפי קטגוריה
@@ -751,7 +904,7 @@
             }
             
             if (filteredFoods.length === 0) {
-                categoryFoods.innerHTML = '<div class="food-item">לא נמצאו מוצרים בקטגוריה זו</div>';
+                categoryFoods.innerHTML = '<div class="food-item">לא נמצאו מוצרים ב�קטגוריה זו</div>';
                 return;
             }
             
@@ -821,7 +974,7 @@
                     <tr><td>שומנים</td><td>${food.fat} גרם</td></tr>
                     <tr><td>סיבים</td><td>${food.fiber} גרם</td></tr>
                 </table>
-                ${vitaminsHTML ? '<h4>ויטמינים ומינרלים:</h4>' + vitaminsHTML : ''}
+                ${vitaminsHTML ? '<h4>ויטמינים ו�מינרלים:</h4>' + vitaminsHTML : ''}
             `;
         }
 
@@ -1136,6 +1289,9 @@
 
         // אתחול האפליקציה בעת טעינת הדף
         window.onload = initApp;
+        
+        // טיפול בשינוי גודל החלון
+        window.addEventListener('resize', handleResponsiveLayout);
     </script>
 </body>
 </html>
