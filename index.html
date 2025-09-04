@@ -356,7 +356,7 @@
                 padding: 6px 8px;
             }
             
-            /* התפריט בנייד יוצג בצד ימין - תיקון בעיית הגלילה */
+            /* תיקון תפריט הנייד */
             .tabs {
                 flex-direction: column;
                 position: fixed;
@@ -367,9 +367,9 @@
                 z-index: 1000;
                 transition: right 0.3s ease;
                 box-shadow: -2px 0 10px rgba(0,0,0,0.2);
-                overflow-y: auto; /* הוספת גלילה אנכית */
+                overflow-y: auto;
                 background: #f0f0f0;
-                padding-bottom: 60px; /* ריפוד לתחתית כדי שהתפריט לא יגיע עד הסוף */
+                padding-bottom: 60px;
             }
             .tabs.active {
                 right: 0;
@@ -393,7 +393,7 @@
                 top: 0;
                 left: 0;
                 width: 100%;
-            height: 100%;
+                height: 100%;
                 background: rgba(0,0,0,0.5);
                 z-index: 999;
             }
@@ -401,7 +401,6 @@
                 display: block;
             }
             
-            /* תיקון גלילת תוכן כאשר התפריט פתוח */
             body.menu-open {
                 overflow: hidden;
                 position: fixed;
@@ -455,6 +454,33 @@
                 padding: 5px;
                 font-size: 12px;
             }
+        }
+
+        /* סגנונות חדשים נוספים */
+        .login-section {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+        }
+        .scanner-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .scanner-buttons button {
+            flex: 1;
+        }
+        .official-search-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .official-search-btn img {
+            width: 20px;
+            height: 20px;
         }
     </style>
 </head>
@@ -593,12 +619,17 @@
                     <h3><i class="fas fa-globe"></i> חיפוש מזון רשמי</h3>
                     <div class="form-group">
                         <input type="text" id="webSearchInput" placeholder="הקלד שם מזון לחיפוש רשמי...">
-                        <button onclick="searchFoodOfficial()"><i class="fas fa-search"></i> חפש במאגרים רשמיים</button>
+                        <button onclick="searchFoodOfficial()" class="official-search-btn">
+                            <i class="fas fa-search"></i> חפש במאגרים רשמיים
+                        </button>
                     </div>
                     
                     <div class="barcode-section">
-                        <h4><i class="fas fa-barcode"></i> סריקת ברקוד</h4>
-                        <button onclick="initBarcodeScanner()"><i class="fas fa-camera"></i> פתח סורק ברקוד</button>
+                        <h4><i class="fas fa-camera"></i> סריקת ברקוד/תמונה</h4>
+                        <div class="scanner-buttons">
+                            <button onclick="initBarcodeScanner()"><i class="fas fa-barcode"></i> סריקת ברקוד</button>
+                            <button onclick="initImageScanner()"><i class="fas fa-camera"></i> צילום תמונה</button>
+                        </div>
                         <div id="barcode-scanner" class="scanner-container hidden-section">
                             <div class="scanner-overlay"></div>
                         </div>
@@ -606,7 +637,7 @@
                     </div>
                     
                     <div class="image-upload-section">
-                        <h4><i class="fas fa-camera"></i> הוספת מזון מתמונה</h4>
+                        <h4><i class="fas fa-upload"></i> העלאת תמונה</h4>
                         <input type="file" id="imageUpload" accept="image/*" onchange="handleImageUpload(this.files)">
                         <div id="imagePreview"></div>
                         <button onclick="analyzeFoodImage()" id="analyzeImageBtn" class="hidden-section"><i class="fas fa-search"></i> אבחן תמונה</button>
@@ -668,13 +699,28 @@
         <div class="tab-content" id="tab5">
             <h2><i class="fas fa-cog"></i> הגדרות</h2>
             
-            <div class="password-change-section">
+            <div class="login-section" id="loginSection">
+                <h3><i class="fas fa-lock"></i> כניסה להגדרות</h3>
+                <div class="form-group">
+                    <input type="password" id="settingsPassword" placeholder="הקלד סיסמה">
+                    <button onclick="loginToSettings()"><i class="fas fa-sign-in-alt"></i> התחבר</button>
+                </div>
+            </div>
+            
+            <div class="password-change-section hidden-section" id="settingsContent">
                 <h3><i class="fas fa-key"></i> שינוי סיסמה</h3>
                 <div class="form-group">
                     <input type="password" id="currentPassword" placeholder="סיסמה נוכחית">
                     <input type="password" id="newPassword" placeholder="סיסמה חדשה">
                     <input type="password" id="confirmPassword" placeholder="אימות סיסמה חדשה">
                     <button onclick="changePassword()"><i class="fas fa-sync-alt"></i> שנה סיסמה</button>
+                </div>
+                
+                <h3><i class="fas fa-database"></i> ניהול מאגר מזון</h3>
+                <div class="form-group">
+                    <button onclick="exportFoodDatabase()"><i class="fas fa-download"></i> ייצא מאגר מזון</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none" onchange="importFoodDatabase(this.files)">
+                    <button onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> יבא מאגר מזון</button>
                 </div>
             </div>
             
@@ -956,6 +1002,7 @@
         let currentCategory = 'all';
         let currentPassword = "delete123"; // סיסמה נוכחית
         let barcodeScanner = null;
+        let isLoggedIn = false;
 
         // אתחול האפליקציה
         function initApp() {
@@ -985,6 +1032,20 @@
             
             // בדיקת גודל מסך והתאמה אוטומטית
             handleResponsiveLayout();
+            
+            // בדיקה אם המשתמש כבר מחובר
+            checkLoginStatus();
+        }
+
+        // בדיקת סטטוס התחברות
+        function checkLoginStatus() {
+            if (isLoggedIn) {
+                document.getElementById('loginSection').classList.add('hidden-section');
+                document.getElementById('settingsContent').classList.remove('hidden-section');
+            } else {
+                document.getElementById('loginSection').classList.remove('hidden-section');
+                document.getElementById('settingsContent').classList.add('hidden-section');
+            }
         }
 
         // טיפול בתצוגה רספונסיבית
@@ -1003,6 +1064,12 @@
 
         // החלפת כרטיסיות
         function switchTab(tabIndex) {
+            // בדיקה אם מנסים לגשת להגדרות ללא הרשאה
+            if (tabIndex === 5 && !isLoggedIn) {
+                alert('נא להתחבר כדי לגשת להגדרות');
+                return;
+            }
+            
             // הסרת מחלקת active מכל הכרטיסיות
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
@@ -1430,6 +1497,20 @@
             document.getElementById('manualFoodImage').value = '';
         }
 
+        // התחברות להגדרות
+        function loginToSettings() {
+            const password = document.getElementById('settingsPassword').value;
+            
+            if (password === currentPassword) {
+                isLoggedIn = true;
+                checkLoginStatus();
+                alert('התחברת בהצלחה!');
+                document.getElementById('settingsPassword').value = '';
+            } else {
+                alert('סיסמה לא תקינה');
+            }
+        }
+
         // שינוי סיסמה
         function changePassword() {
             const current = document.getElementById('currentPassword').value;
@@ -1501,6 +1582,14 @@
             }
         }
 
+        // אתחול סורק תמונה
+        function initImageScanner() {
+            alert('פתיחת מצלמה לסריקת תמונה...');
+            // כאן יהיה הקוד לפתיחת המצלמה בפועל
+            // להמחשה, נפתח את חלון העלאת התמונה
+            document.getElementById('imageUpload').click();
+        }
+
         // הוספת מזון שסורקן באמצעות ברקוד
         function addScannedFood() {
             // מזון לדוגמה שסורקן
@@ -1521,6 +1610,8 @@
             
             foodDatabase.push(scannedFood);
             alert(`המזון "${scannedFood.name}" נוסף בהצלחה למאגר!`);
+            
+            // ריענון המאגר
             initApp();
             
             // איפוס סורק הברקוד
@@ -1576,6 +1667,44 @@
                 analyzeBtn.innerHTML = '<i class="fas fa-search"></i> אבחן תמונה';
                 alert('התמונה נותחה בהצלחה ממקור רשמי! שדות הטופס מולאו אוטומטית.');
             }, 3000);
+        }
+
+        // ייצוא מאגר המזון
+        function exportFoodDatabase() {
+            const dataStr = JSON.stringify(foodDatabase, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = 'food-database.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        // יבוא מאגר מזון
+        function importFoodDatabase(files) {
+            if (files.length === 0) return;
+            
+            const file = files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (Array.isArray(importedData)) {
+                        foodDatabase = importedData;
+                        initApp();
+                        alert('מאגר המזון יובא בהצלחה!');
+                    } else {
+                        alert('קובץ לא תקין');
+                    }
+                } catch (error) {
+                    alert('שגיאה בקריאת הקובץ: ' + error.message);
+                }
+            };
+            
+            reader.readAsText(file);
         }
 
         // אתחול האפליקציה בעת טעינת הדף
